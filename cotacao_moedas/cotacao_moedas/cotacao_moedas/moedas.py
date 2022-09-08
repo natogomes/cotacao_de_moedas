@@ -1,3 +1,6 @@
+
+# Lista com todas as moedas
+
 moedas = ['Afegane afegão', 'Ariary malgaxe', 'Baht tailandês', 'Balboa panamenho', 'Birr etíope',
           'Boliviano da Bolívia', 'Bolívar venezuelano', 'Cedi ganês', 'Colom salvadorenho', 'Colón costarriquenho',
           'Coroa dinamarquesa', 'Coroa islandesa', 'Coroa norueguesa', 'Coroa sueca', 'Coroa tcheca',

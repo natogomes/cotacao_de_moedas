@@ -22,9 +22,6 @@ Please refer to the documentation for more information at https://documentation.
 
 from botcity.web import WebBot, Browser
 from interface_grafica import *
-# Uncomment the line below for integrations with BotMaestro
-# Using the Maestro SDK
-# from botcity.maestro import *
 
 
 class Bot(WebBot):
@@ -38,12 +35,12 @@ class Bot(WebBot):
         # Uncomment to set the WebDriver path
         self.driver_path = "./chromedriver.exe"
 
+        # Inicia a janela do programa
         win_inicial()
         while True:
             window, event, values = sg.read_all_windows()
             moeda_sai = values['moeda_sai']
             moeda_ent = values['moeda_ent']
-            cont = 0
 
             if event == sg.WIN_CLOSED:
                 self.stop_browser()
@@ -56,6 +53,8 @@ class Bot(WebBot):
             elif event == 'Pesquisar':
 
                 window['saida'].update('')
+
+                # Abre o navegador
                 self.browse("https://www.google.com")
                 self.maximize_window()
 
@@ -65,12 +64,14 @@ class Bot(WebBot):
                     from datetime import datetime
                     data_hora = datetime.today()
 
+                    # Clica em pesquisar do google
                     if not self.find( "pesquisar", matching=0.97, waiting_time=10000):
                         self.not_found("pesquisar")
                     self.click()
                     self.paste(f'Cotação {moeda_ent}')
                     self.enter()
 
+                    # Clica para escolher a moeda para qual será cotada
                     if not self.find( "saida", matching=0.97, waiting_time=10000):
                         self.not_found("saida")
                     self.click()
@@ -78,20 +79,23 @@ class Bot(WebBot):
                     for moeda in moedas:
                         cont += 1
                         if moeda == moeda_sai:
+
+                            # 115 é a posição que se encontra o Real brasileiro que já é automático para o Brasil
                             if cont > 115:
                                 passou = cont - 115
                                 for c in range(0, passou):
-                                    self.type_down()
+                                    self.type_down(0)
                                 self.enter()
                             else:
                                 faltou = 115 - cont
                                 for c in range(0, faltou):
-                                    self.type_up()
+                                    self.type_up(0)
                                 self.enter()
 
+                    # Clique relativo para chegar no valor final
                     if not self.find( "valor_relative", matching=0.97, waiting_time=10000):
                         self.not_found("valor_relative")
-                    self.triple_click_relative(186, 202)
+                    self.triple_click_relative(-520, 205)
                     self.wait(1000)
                     self.control_c()
                     cotacao = self.get_clipboard()

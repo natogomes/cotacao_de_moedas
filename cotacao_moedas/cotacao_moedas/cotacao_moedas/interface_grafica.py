@@ -3,6 +3,10 @@ from moedas import moedas
 
 
 def win_inicial():
+    """
+    -> Cria a janela do programa.
+    :return: Sem retorno
+    """
     sg.theme('DarkTeal12')
 
     layout = [
